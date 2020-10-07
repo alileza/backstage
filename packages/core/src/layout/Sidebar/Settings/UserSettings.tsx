@@ -24,15 +24,21 @@ import { SidebarContext } from '../config';
 
 type Props = {
   providerSettings?: React.ReactNode;
+  customDisplayName?: string;
 };
 
-export const SidebarUserSettings = ({ providerSettings }: Props) => {
+export const SidebarUserSettings = ({
+  providerSettings,
+  customDisplayName,
+}: Props) => {
   const { isOpen: sidebarOpen } = useContext(SidebarContext);
-  const { displayName } = useUserProfile();
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | undefined>(
     undefined,
   );
+
+  let { displayName } = useUserProfile();
+  if (customDisplayName) displayName = customDisplayName;
 
   const handleOpen = (event?: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event?.currentTarget ?? undefined);
